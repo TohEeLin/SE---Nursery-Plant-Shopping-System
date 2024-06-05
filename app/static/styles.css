@@ -1,0 +1,182 @@
+/* by TOH EE LIN */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+
+/* by TOH EE LIN */
+.navbar {
+    margin-bottom: 20px; 
+}
+
+/* by TOH EE LIN */
+.main-content {
+    padding: 20px;
+}
+
+/* by TOH EE LIN */
+.plant-container {
+    border: 3px solid #333;
+    background-color: #ffffff;
+    margin-top: 10px;
+}
+
+/* by TOH EE LIN */
+.plant-container .card-body {
+    padding: 15px;
+}
+
+/* by TOH EE LIN */
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* by TOH EE LIN */
+.card-footer {
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+/* by TOH EE LIN */
+button, .btn {
+    margin: 5px 10px 5px 0px; 
+    padding: 5px 10px; 
+}
+
+/* by TOH EE LIN */
+.btn-success {
+    margin: 30px 
+}
+
+/* by TOH EE LIN */
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .search-container, .create-button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* by TOH EE LIN */
+.reviews-title {
+    font-weight: bold;
+    margin: 5px 0px 10px 5px;
+}
+
+/* by TOH EE LIN */
+/* List group styling for reviews */
+.list-group-item {
+    padding: 10px;
+    border: none; 
+    margin-bottom: 10px;
+}
+
+/* by TOH EE LIN */
+.form-container {
+    width: 100%; 
+    max-width: 650px; 
+    padding: 30px;
+    background-color: #ffffff;
+    border: 3px solid #333;
+    border-radius: 15px;
+}
+
+/* by TOH EE LIN */
+.form-container h2 {
+   margin-bottom: 20px;
+}
+
+/* by TOH EE LIN */
+.form-label {
+    margin-left: 2px;
+}
+
+/* by TOH EE LIN */
+.form-row input[type="text"],
+.form-row input[type="number"],
+.form-row textarea,
+.form-row input[type="file"] {
+    flex-grow: 1;   /* Grow to use available space */
+    padding: 10px;
+    border-radius: 5px;
+    resize: vertical; 
+    border: 1px solid #000; 
+    line-height: 1;
+}
+
+/* by TOH EE LIN */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group input[type="file"] {
+    flex-grow: 1; 
+    padding: 10px;
+    border-radius: 5px;
+    resize: vertical; 
+    border: 1px solid #000; 
+    line-height: 1;
+}
+
+/* by TOH EE LIN */
+.form-buttons {
+    display: flex;
+    align-items: center; 
+}
+
+/* by TOH EE LIN */
+.form-buttons .btn-primary {
+    margin-left: auto;
+}
+
+/* by TOH EE LIN */
+.form-buttons input[type="button"]:hover,
+.form-buttons input[type="submit"]:hover {
+    background-color: #e7e7e7;
+}
+
+/* by TOH EE LIN */
+.plant-image-preview {
+    height: 250px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* by TOH EE LIN */
+.plant-image-preview img {
+    margin-left: 20px;
+}
+
+/* by TOH EE LIN */
+.order-container {
+    background-color: #ffffff;
+    padding: 0px 20px;
+    border: 3px solid #333;
+    margin: 10px 80px;
+}
+
+/* by TOH EE LIN */
+.update-status-button:hover {
+    background-color: #e7e7e7;
+}
+
+/* by TOH EE LIN */
+.delivery-container {
+    background-color: #ffffff;
+    padding: 0px 20px;
+    border: 3px solid #333;
+    margin: 10px 80px;
+}
+
+/* by TOH EE LIN */
+.assign-button:hover {
+    background-color: #e7e7e7;
+}

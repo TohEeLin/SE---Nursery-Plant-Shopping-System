@@ -1,0 +1,85 @@
+<!-- by TOH EE LIN -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Plant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'adminDashboard' %}">Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="{% url 'plantManagement' %}">Plant Management</a>
+                    <a class="nav-item nav-link" href="{% url 'orderManagement' %}">Order Management</a>
+                    <a class="nav-item nav-link" href="{% url 'deliveryManagement' %}">Delivery Management</a>
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 form-container">
+        <div class="text-center">
+            <h2>Update Plant Form</h2>
+        </div>
+
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        <div class="form-content d-flex justify-content-between">
+            <form action="{% url 'updatePlant' plant.id %}" method="post" enctype="multipart/form-data" class="w-100 mr-2">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="plant-name">Enter Plant Name</label>
+                    <input type="text" id="plant-name" name="plant_name" value="{{ plant.plant_name }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="plant-description">Enter Plant Descriptions</label>
+                    <textarea id="plant-description" name="plant_description" class="form-control">{{ plant.plant_description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="plant-quantity">Enter Plant Quantity</label>
+                    <input type="number" id="plant-quantity" name="plant_availability" value="{{ plant.plant_availability }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="plant-price">Enter Plant Price</label>
+                    <input type="number" id="plant-price" name="plant_price" value="{{ plant.plant_price }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="plant-image">Choose Image</label>
+                    <input type="file" id="plant-image" name="plant_image" class="form-control">
+                </div>
+                <div class="form-buttons">
+                    <a href="{% url 'plantManagement' %}" class="btn btn-secondary">Back</a>
+                    <input type="submit" value="Update" class="btn btn-primary">
+                </div>
+            </form>
+            
+            <div class="plant-image-preview w-50">
+                <img src="{{ plant.plant_image.url }}" alt="Plant image preview" class="img-fluid">
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

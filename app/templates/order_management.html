@@ -1,0 +1,107 @@
+<!-- by TOH EE LIN -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'adminDashboard' %}">Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="{% url 'plantManagement' %}">Plant Management</a>
+                    <a class="nav-item nav-link active" href="{% url 'orderManagement' %}">Order Management</a>
+                    <a class="nav-item nav-link" href="{% url 'deliveryManagement' %}">Delivery Management</a>
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 main-content">
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% elif info_message %}
+            <div class="alert alert-info" role="alert">
+                {{ info_message }}
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="text-center mb-4">
+                    <form class="form-inline d-inline" action="{% url 'orderManagement' %}" method="get">
+                        <input type="text" class="form-control mr-2" name="search_query" placeholder="Search by Order ID" value="{{ search_query }}" style="width: 50%;">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% for order in orders %}
+        <div class="order-container card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <p class="card-text"><strong>OrderID:</strong> {{ order.id }}</p>
+                        <p class="card-text"><strong>Full Name:</strong> {{ order.customer.customer_name }}</p>
+                        <p class="card-text"><strong>Email:</strong> {{ order.customer.user.email }}</p>
+                        <p class="card-text"><strong>State:</strong> {{ order.customer.customer_state }}</p>
+                        <p class="card-text"><strong>Total Plants:</strong> {{ order.total_plant_quantity }}</p>
+                        <p class="card-text"><strong>Total Price:</strong> {{ order.payment.payment_cost }}</p>
+                    </div>
+                    <div class="col-md-5">
+                        <p class="card-text"><strong>UserID:</strong> {{ order.customer.user.id }}</p>
+                        <p class="card-text"><strong>Phone Number:</strong> {{ order.customer.customer_phone_number }}</p>
+                        <p class="card-text"><strong>Address:</strong> {{ order.customer.customer_address }}</p>
+                        <p class="card-text"><strong>Order Date:</strong> {{ order.payment.order_date }}</p>
+                        <p class="card-text"><strong>Receive Method:</strong> {{ order.payment.receive_method }}</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <form action="{% url 'update_order_status' order.id %}" method="post" class="form-inline">
+                            {% csrf_token %}
+                            <div class="form-group mb-1 mr-2">
+                                <label for="status-select-{{ order.id }}" class="sr-only">Order Status:</label>
+                                <select id="status-select-{{ order.id }}" class="form-control" name="status">
+                                    {% if order.payment.receive_method == 'Delivery' %}
+                                        <option value="Waiting" {% if order.order_status == 'Waiting' %}selected{% endif %}>Waiting</option>
+                                        <option value="Ready" {% if order.order_status == 'Ready' %}selected{% endif %}>Ready</option>
+                                    {% elif order.payment.receive_method == 'Pickup' %}
+                                        <option value="Waiting" {% if order.order_status == 'Waiting' %}selected{% endif %}>Waiting</option>
+                                        <option value="Ready" {% if order.order_status == 'Ready' %}selected{% endif %}>Ready</option>
+                                        <option value="Completed" {% if order.order_status == 'Completed' %}selected{% endif %}>Completed</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Update Status</button>
+                        </form>
+                    </div>
+                </div>                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

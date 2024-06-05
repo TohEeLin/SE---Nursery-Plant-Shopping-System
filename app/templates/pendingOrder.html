@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pending Orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .vertical-center {
+            min-height: 100vh;
+            min-height: calc(90vh - 120px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    </head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #333333;">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item deliveryman-section">
+                <a class="nav-link active" href="{% url 'deliveryDashboard' %}">Delivery Man</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'pendingOrder' %}">Pending Order</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'acceptedDelivery' %}">Accepted Deliveries</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accountSetting' %}">Account Settings</a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    
+    <div class="container mt-4">
+        <h2>Pending Orders</h2>
+        {% if no_orders %}
+        <div class="text-center mb-4 alert alert-light">
+            You have no pending orders at the moment.
+        </div>
+        {% else %}
+        {% for order in delivery_orders %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="card-text"><strong>Delivery Order ID:</strong> {{ order.id }}</p>
+                <p class="card-text"><strong>Customer Name:</strong> {{ order.customer.customer_name }}</p>
+                <p class="card-text"><strong>Customer ID:</strong> {{ order.customer.user.id }}</p>
+                <p class="card-text"><strong>Phone Number:</strong> {{ order.customer.customer_phone_number }}</p>
+                <p class="card-text"><strong>Delivery address:</strong> {{ order.customer.customer_address }}</p>
+                <div class="button-container">
+                    <button class="btn btn-primary" onclick="handleOrder('reject', {{ order.id }})">Reject</button>
+                    <button class="btn btn-primary" onclick="handleOrder('accept', {{ order.id }})">Accept</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        // When click the button js will link to python to do the action
+        function handleOrder(action, orderId) {
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'pendingOrder' %}',
+                data: {
+                    action: action,
+                    orderId: orderId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

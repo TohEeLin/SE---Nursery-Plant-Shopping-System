@@ -1,0 +1,99 @@
+<!-- by TEO YU JIE -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Account Settings</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .vertical-center {
+            min-height: 100vh;
+            min-height: calc(90vh - 120px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .account-info {
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 0.25rem;
+            background-color: white;
+            margin-bottom: 20px;
+        }
+        .account-info p {
+            margin-bottom: 0.5rem;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5rem;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #333333;">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item deliveryman-section">
+                <a class="nav-link active" href="{% url 'deliveryDashboard' %}">Delivery Man</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'pendingOrder' %}">Pending Order</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'acceptedDelivery' %}">Accepted Deliveries</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accountSetting' %}">Account Settings</a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container mt-4">
+        <h2 class="title">Account Settings</h2>
+        <div id="successMessage" class="alert alert-success" style="display: none;">
+            Your password was successfully changed.
+        </div>
+        <div class="vertical-center">
+            <div class="container">
+                <div class="account-info">
+                    <p><strong>Full Name:</strong> {{ full_name }}</p>
+                    <p><strong>Email:</strong> {{ email }}</p>
+                    <p><strong>Phone Number:</strong> {{ phone }}</p>
+                    <p><strong>Address:</strong> {{ address }}</p>
+                    <p><strong>State:</strong> {{ state }}</p>
+                    <p><strong>IC No:</strong> {{ ic }}</p>
+                </div>
+                <div class="button-container">
+                    <button class="btn btn-primary" onclick="window.location.href='{% url 'editProfile' %}'">Edit Profile</button>
+                    <button class="btn btn-primary" onclick="window.location.href='{% url 'changePassword' %}'">Change Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if show_alert %}
+        <script>
+          window.onload = function() {
+              var successMessageDiv = document.getElementById('successMessage');
+              successMessageDiv.style.display = 'block';
+
+              setTimeout(function() {
+                  successMessageDiv.style.display = 'none';
+              }, 5000);
+          };
+        </script>
+    {% endif %}
+    <script src="../static/js/accountSetting.js"></script>
+
+</body>
+</html>

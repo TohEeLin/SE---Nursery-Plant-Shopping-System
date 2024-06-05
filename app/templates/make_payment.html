@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Payment</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .vertical-center {
+            min-height: 100vh;
+            min-height: calc(100vh - 56px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-section {
+            padding: 2rem 0;
+            background: #f8f9fa;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #e3e3e3;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #333333;">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item deliveryman-section">
+                        <a class="nav-link active" href="{% url 'plant_list' %}">Plant List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'view_cart' %}">Shopping Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'my_orders' %}">My Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'account_settings' %}">Account
+                            Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'to_review' %}">To Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'view_wishlist' %}">Wishlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% if messages %}
+        <div class="alert alert-info text-center mt-4">
+            {% for message in messages %}
+                <div{% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <h2 class="mb-4">Make Payment</h2>
+        <p>Receive Item Via: {{ receive_method|title }}</p>
+        <p>Total Cost (including shipping fee if applicable): RM{{ total_cost }}</p>
+        <p>Payment Method:</p>
+        <form method="post" action="{% url 'make_payment' %}">
+            {% csrf_token %}
+            <!-- Payment options -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <input type="radio" id="credit_debit" name="payment_method" value="credit_debit" checked>
+                    <label for="credit_debit">Credit/Debit Card</label>
+                </div>
+                <div>
+                    <input type="radio" id="fpx" name="payment_method" value="fpx">
+                    <label for="fpx">FPX (Internet Banking)</label>
+                </div>
+                <div>
+                    <input type="radio" id="tng_ewallet" name="payment_method" value="tng_ewallet">
+                    <label for="tng_ewallet">Touch 'N Go E-Wallet</label>
+                </div>
+            </div>
+            <input type="submit" value="Confirm" class="btn btn-primary float-right">
+        </form>
+        <script>
+            document.getElementById('payment-form').onsubmit = function(e) {
+              e.preventDefault(); // Prevent the form from submitting immediately
+              if (confirm('Are you sure you want to confirm the transaction?')) {
+                this.submit(); // If confirmed, submit the form
+              }
+            };
+          </script>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
